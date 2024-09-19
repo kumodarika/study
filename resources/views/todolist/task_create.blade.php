@@ -100,7 +100,7 @@
                 <option value="3">完了</option>
             </select>
             <br>
-            ・タイトル：<input type="textarea" name="title"><br>
+            ・タイトル：<input type="textarea" name="title" maxlength="100"><br>
             ・期日：<input type="datetime-local" name="due_date"  min="{{ now()->format('Y-m-d\TH:i') }}"><br>
             ・担当：<input type="text" name="assignee"><br>
             <input type="submit" name="create" value="追加">
