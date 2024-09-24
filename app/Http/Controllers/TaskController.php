@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\createRequest;
+use App\Http\Requests\CreateRequest;
+use App\Http\Requests\UpdateRequest;
 use App\Models\Task;
 
 class TaskController extends Controller
@@ -18,11 +19,11 @@ class TaskController extends Controller
         return view('todolist.task_create');
     }
 
-    public function create(createRequest $request)
+    public function create(CreateRequest $request)
     {
         // バリデーション済みデータを取得
         try {
-        $data = $request->validated();
+            $data = $request->validated();
 
             $task = new Task();
             $task->status = $request->status;
@@ -46,29 +47,19 @@ class TaskController extends Controller
         return view('todolist.task_update',["task"=>$task]);
     }
 
-    public function update(Request $request)
+    public function update(UpdateRequest $request)
     {
-        //バリデーション
-        $validated = $request->validate([
-            'status' => 'required|integer|in:1,2,3',
-            'title' => 'required|string|max:100',
-            'due_date' => 'nullable|date|after_or_equal:now',
-            'assignee' => 'required|string|max:20',
-        ],[
-            'status.required' => 'ステータスは必須です。',
-            'title.required' => 'タイトルは必須です。',
-            'due_date.after_or_equal' => '期日は今日以降の日付でなければなりません。',
-            'assignee.required' => '担当者は必須です。',
-        ]);
+        // バリデーション済みデータを取得
         try{
-        Task::find($request->id)->update([
-            'status'=>$request->status,
-            'title'=>$request->title,
-            'due_date'=>$request->due_date,
-            'assignee'=>$request->assignee,
-        ]);
+            $data = $request->validated();
+            Task::find($request->id)->update([
+                'status'=>$request->status,
+                'title'=>$request->title,
+                'due_date'=>$request->due_date,
+                'assignee'=>$request->assignee,
+            ]);
 
-        return redirect('/')->with('success', 'タスクが更新されました。');
+            return redirect('/')->with('success', 'タスクが更新されました。');
     } catch (\Exception $e) {
         return redirect('/edit/'.$request->id)->with('error', '更新することができません。');
     }
