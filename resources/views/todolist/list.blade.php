@@ -130,6 +130,24 @@
 <body>
     <div class="container mt-5">
         <h1>タスク一覧</h1>
+        <form method="GET" action="{{ url('/') }}">
+            <input type="text" name="keyword" placeholder="キーワード検索" value="{{ request('keyword') }}">
+            <select name="assignee">
+                <option value="">全ての担当者</option>
+                @foreach($assignees as $assignee)
+                    <option value="{{ $assignee->id }}" {{ request('assignee') == $assignee->id ? 'selected' : '' }}>
+                        {{ $assignee->name }}
+                    </option>
+                @endforeach
+            </select>
+            <select name="status">
+                <option value="">全ての状態</option>
+                <option value="1" {{ request('status') == 1 ? 'selected' : '' }}>未了</option>
+                <option value="2" {{ request('status') == 2 ? 'selected' : '' }}>処理中</option>
+                <option value="3" {{ request('status') == 3 ? 'selected' : '' }}>完了</option>
+            </select>
+            <button type="submit">検索</button>
+        </form>
         <a href="{{url('/create-task')}}" class="btn btn-blue">追加</a>
         <table border="1">
             <tr>
