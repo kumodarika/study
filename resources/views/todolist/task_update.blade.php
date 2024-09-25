@@ -113,7 +113,15 @@
             <br>
             ・タイトル：<input type="textarea" name="title" value="{{$task->title}}"><br>
             ・期日：<input type="datetime-local" name="due_date" value="{{$task->due_date}}" min="{{ now()->format('Y-m-d\TH:i') }}"><br>
-            ・担当：<input type="text" name="assignee" value="{{$task->assignee}}"><br>
+            ・担当：<select name="assignee">
+                <option value="">選択してください</option>
+                    @foreach($assignees as $assignee)
+                    <option value="{{ $assignee->id }}" {{ $task->assignee_id == $assignee->id ? 'selected' : '' }}>
+                        {{ $assignee->name }}
+                    </option>
+                    @endforeach
+                </select>
+                <br>
             <input type="submit" name="update" value="保存">
         </form>
         <a href="{{url('/')}}" class="btn">戻る</a>
