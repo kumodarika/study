@@ -6,17 +6,19 @@ use Illuminate\Http\Request;
 use App\Http\Requests\CreateRequest;
 use App\Http\Requests\UpdateRequest;
 use App\Models\Task;
+use App\Models\Assignee;
 
 class TaskController extends Controller
 {
     public function index(){
-        $tasks = Task::orderBy('due_date','asc')->get();
+        $tasks = Task::with('assignee')->orderBy('due_date','asc')->get();
         return view('todolist.list',["tasks"=>$tasks]);
     }
 
     public function createTask()
     {
-        return view('todolist.task_create');
+        $assignees = Assignee::all(); //担当者データの取得
+        return view('todolist.task_create', compact('assignees'));
     }
 
     public function create(CreateRequest $request)
@@ -29,7 +31,7 @@ class TaskController extends Controller
             $task->status = $request->status;
             $task->title = $request->title;
             $task->due_date = $request->due_date;
-            $task->assignee = $request->assignee;
+            $task->assignee_id = $request->assignee;
             $task->save();
 
             return redirect('/')->with('success', 'タスクが作成されました。');
@@ -37,6 +39,7 @@ class TaskController extends Controller
         dd($e->getMessage()); // エラー内容を表示
     }
     }
+
     public function editTask($id)
     {
         $task = Task::find($id);

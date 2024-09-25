@@ -13,12 +13,13 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('tasks');
         Schema::create('tasks', function (Blueprint $table) {
                 $table->increments('id')->primary();//ID
                 $table->tinyInteger('status');//状態
                 $table->string('title',100);//タイトル
                 $table->datetime('due_date')->nullable();//期日
-                $table->string('assignee',20);//担当者
+                $table->foreignId('assignee_id')->constrained('assignees')->onDelete('cascade');//担当者
                 $table->timestamp('created_at')->useCurrent();//作成日
             });
     }
