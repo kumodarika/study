@@ -162,7 +162,7 @@
                 <td style="color:{{ ($task->due_date && \Carbon\Carbon::now()->diffInDays($task->due_date) <= 7) ? 'red' : 'black' }}">
                     {{$task->due_date ? \Carbon\Carbon::parse($task->due_date)->format('Y-m-d H:i') : '未設定'}}
                 </td>
-                <td>{{$task->assignee}}</td>
+                <td>{{$task->assignee->name}}</td>
                 <td><a href="{{url('/edit/'.$task->id)}}" class="btn-edit">編集</a></td>
                 <td><a href="{{url('/delete/'.$task->id)}}" class="btn-delete" onclick="return confirm('本当に削除しますか？')">削除</a></td>
             </tr>

@@ -102,7 +102,13 @@
             <br>
             ・タイトル：<input type="text" name="title" maxlength="100"><br>
             ・期日：<input type="datetime-local" name="due_date"  min="{{ now()->format('Y-m-d\TH:i') }}"><br>
-            ・担当：<input type="text" name="assignee"><br>
+            ・担当：<select name="assignee">
+                <option value="">選択してください</option>
+                    @foreach($assignees as $assignee)
+                        <option value="{{ $assignee->id }}">{{ $assignee->name }}</option>
+                    @endforeach
+                </select>
+            <br>
             <input type="submit" name="create" value="追加">
         </form>
         <a href="{{url('/')}}" class="btn">戻る</a>

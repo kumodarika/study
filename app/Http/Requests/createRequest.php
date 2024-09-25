@@ -31,7 +31,7 @@ class CreateRequest extends FormRequest
             'status' => 'required|integer|in:1,2,3',
             'title' => 'required|string|max:100',
             'due_date' => 'nullable|date|after_or_equal:now',
-            'assignee' => 'required|string|max:20',
+            'assignee' => 'required|exists:assignees,id',
         ];
     }
 
