@@ -29,8 +29,11 @@ class TaskController extends Controller
         $query->where('status', $request->status);
     }
 
-        $tasks = $query->get();
-        $assignees = Assignee::all(); // 担当者データの取得
+    $tasks = $query->paginate(10); // 1ページあたり10件
+    $assignees = Assignee::all(); // 担当者データの取得
+
+        // $tasks = $query->get();
+        // $assignees = Assignee::all(); // 担当者データの取得
         return view('todolist.list', compact('tasks', 'assignees'));
     }
     public function createTask()
