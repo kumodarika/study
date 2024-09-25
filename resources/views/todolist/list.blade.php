@@ -125,6 +125,20 @@
             background-color: #28a745;
         }
 
+        input[type="text"],
+    select {
+        width: 200px; /* 幅を調整 */
+        padding: 10px; /* 内側の余白を調整 */
+        margin: 3px 5px; /* 上下の余白を調整 */
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box; /* ボックスサイズを含める */
+    }
+
+    button[type="submit"] {
+        padding: 10px 15px; /* ボタンの内側の余白を調整 */
+        font-size: 16px; /* フォントサイズを調整 */
+    }
     </style>
 </head>
 <body>
