@@ -42,12 +42,14 @@ class TaskController extends Controller
 
     public function editTask($id)
     {
+        $assignees = Assignee::all();
         $task = Task::find($id);
 
         if(!$task){
             return redirect('/')->with('error','タスクが見つかりませんでした。');
         }
-        return view('todolist.task_update',["task"=>$task]);
+        // return view('todolist.task_update',["task"=>$task]);
+        return view('todolist.task_update', compact('task', 'assignees'));
     }
 
     public function update(UpdateRequest $request)
@@ -59,7 +61,7 @@ class TaskController extends Controller
                 'status'=>$request->status,
                 'title'=>$request->title,
                 'due_date'=>$request->due_date,
-                'assignee'=>$request->assignee,
+                'assignee_id'=>$request->assignee,
             ]);
 
             return redirect('/')->with('success', 'タスクが更新されました。');
