@@ -10,11 +10,29 @@ use App\Models\Assignee;
 
 class TaskController extends Controller
 {
-    public function index(){
-        $tasks = Task::with('assignee')->orderBy('due_date','asc')->get();
-        return view('todolist.list',["tasks"=>$tasks]);
+    public function index(Request $request)
+    {
+        $query = Task::with('assignee')->orderBy('due_date', 'asc');
+
+        // キーワード検索
+        if ($request->has('keyword') && $request->keyword) {
+            $query->where('title', 'like', '%' . $request->keyword . '%');
+        }
+
+        // 担当者のフィルタリング
+        if ($request->has('assignee') && $request->assignee) {
+            $query->where('assignee_id', $request->assignee);
+        }
+
+        // 状況のフィルタリング
+    if ($request->has('status') && $request->status) {
+        $query->where('status', $request->status);
     }
 
+        $tasks = $query->get();
+        $assignees = Assignee::all(); // 担当者データの取得
+        return view('todolist.list', compact('tasks', 'assignees'));
+    }
     public function createTask()
     {
         $assignees = Assignee::all(); //担当者データの取得
