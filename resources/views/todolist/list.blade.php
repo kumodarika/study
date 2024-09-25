@@ -103,14 +103,14 @@
         }
 
         td {
-        text-align: center; /* テーブルセル内のテキスト全体を中央揃え */
+        text-align: center;
         }
 
         .status {
         color: white;
         padding: 5px 10px;
-        border-radius: 20px; /* 丸いふち */
-        display: inline-block; /* インラインブロック表示 */
+        border-radius: 20px;
+        display: inline-block;
         }
 
         .status-1 {
@@ -127,18 +127,44 @@
 
         input[type="text"],
     select {
-        width: 200px; /* 幅を調整 */
-        padding: 10px; /* 内側の余白を調整 */
-        margin: 3px 5px; /* 上下の余白を調整 */
+        width: 200px;
+        padding: 10px;
+        margin: 3px 5px;
         border: 1px solid #ddd;
         border-radius: 4px;
-        box-sizing: border-box; /* ボックスサイズを含める */
+        box-sizing: border-box;
     }
 
     button[type="submit"] {
-        padding: 10px 15px; /* ボタンの内側の余白を調整 */
-        font-size: 16px; /* フォントサイズを調整 */
+        padding: 10px 15px;
+        font-size: 16px;
     }
+
+    .pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination .page-item {
+    margin: 0 5px;
+}
+
+.page-link {
+    text-decoration: none;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    color: #007bff;
+}
+
+.page-item.disabled .page-link {
+    color: #6c757d;
+}
+
     </style>
 </head>
 <body>
@@ -200,6 +226,11 @@
             </tr>
             @endforeach
         </table>
+
+        <div class="pagination">
+            {{ $tasks->links('vendor.pagination.bootstrap-5') }}
+        </div>
+
     </div>
 </body>
 
