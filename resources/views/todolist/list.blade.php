@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>タスク管理アプリ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -79,11 +80,15 @@
             background-color: #f1f1f1;
         }
         .btn-edit {
-            background-color: blue;
+            background-color: #0056b3;
             color: white;
             padding: 5px 10px;
             border-radius: 4px;
             text-align: center;
+        }
+
+        .btn-edit i {
+            margin-right: 5px; /* アイコンとテキストの間にスペースを追加 */
         }
 
         .btn-delete {
@@ -92,6 +97,10 @@
             padding: 5px 10px;
             border-radius: 4px;
             text-align: center;
+        }
+
+        .btn-delete i {
+    margin-right: 5px;
         }
 
         .btn-edit:hover, .btn-delete:hover {
@@ -221,8 +230,22 @@
                     {{$task->due_date ? \Carbon\Carbon::parse($task->due_date)->format('Y-m-d H:i') : '未設定'}}
                 </td>
                 <td>{{$task->assignee->name}}</td>
-                <td><a href="{{url('/edit/'.$task->id)}}" class="btn-edit">編集</a></td>
-                <td><a href="{{url('/delete/'.$task->id)}}" class="btn-delete" onclick="return confirm('本当に削除しますか？')">削除</a></td>
+                <td>
+                    <form action="{{url('/edit/'.$task->id)}}" method="GET" style="display:inline;">
+                        <button type="submit" class="btn-edit">
+                            <i class="fas fa-edit"></i>編集
+                        </button>
+                    </form>
+                </td>
+                <td>
+                    <form action="{{ url('/delete/'.$task->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('本当に削除しますか？');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn-delete">
+                            <i class="fas fa-trash"></i>削除
+                        </button>
+                    </form>
+                </td>
             </tr>
             @endforeach
         </table>
