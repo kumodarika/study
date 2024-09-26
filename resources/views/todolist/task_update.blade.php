@@ -11,21 +11,25 @@
             margin: 0;
             padding: 0;
             color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
 
         .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
+            width: 100%;
+            max-width: 900px;
+            padding: 40px;
             background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
         }
 
         h2 {
             color: #333;
             margin-top: 0;
+            font-size: 30px;
         }
 
         a {
@@ -47,25 +51,25 @@
         input[type="date"],
         textarea,
         select {
-            width: calc(60% - 22px);
-            padding: 10px;
+            width: calc(100% - 50px);
+            padding: 12px;
             margin: 5px 0 15px;
             border: 1px solid #ddd;
             border-radius: 4px;
             box-sizing: border-box;
+            font-size: 13px;
         }
 
         input[type="submit"] {
-            width: 5%;
-            text-align:center;
-            padding: 7px;
-            margin:15px;
+            width: auto;
+            padding: 10px 20px;
+            margin: 20px 0;
             border: none;
             border-radius: 5px;
             background-color: #007bff;
             color: white;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 18px;
         }
 
         input[type="submit"]:hover {
@@ -79,7 +83,7 @@
 </head>
 
 <body>
-    <div>
+    <div class="container">
         <h2>タスクの編集</h2>
         <form method="POST" action="{{ url('/update') }}">
             @csrf
@@ -99,7 +103,7 @@
             @if(session('success'))
                 <div style="color: green;">{{ session('success') }}</div>
             @endif
-            ・状態： <label for="status">状態：</label>
+            <label for="status">・状態： </label>
                 <select name="status" id="status" style="border-color:
                 @if($task->status == 1) gray
                 @elseif($task->status == 2) yellow
